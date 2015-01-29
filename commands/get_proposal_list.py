@@ -17,7 +17,7 @@ def process(command):
     for i in result:
         key = "proposal" + i
         value = client.hgetall(key)
-    	proposal_title_list.append(ProposalTitle(value['title'], value['state'], i).dump_json())
+    	proposal_title_list.append(ProposalTitle(value['title'], value['state'], i).data_dict)
     print proposal_title_list
     return reply(True, command, proposal_title_list)
 

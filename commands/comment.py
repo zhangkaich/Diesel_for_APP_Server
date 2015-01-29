@@ -2,18 +2,12 @@
 
 class Comment(object):
 
-    def __init__(self, user_id, user_name, comment, time):
-        self.user_id = user_id
-        self.user_name = user_name
-        self.comment = comment
-        self.time = time
+    def __init__(self, user_name, comment, time):
+        self.data_dict = {}
+        self.data_dict['user_name'] = user_name
+        self.data_dict['comment'] = comment
+        self.data_dict['time'] = time
 
     def __str__(self):
-        return 'user_id [%r], user_name[%r], comment[%r]' % (self.user_id, self.user_name, self.comment)
-
-    def dump_json(self):
-        dump_dict = {}
-        dump_dict['title'] = self._title
-        dump_dict['state'] = self._state
-        dump_dict['id'] = self._id
-        return dump_dict
+        return 'user_name[%r], comment[%r], time[%r]' %\
+        (self.data_dict['user_name'], self.data_dict['comment'], self.data_dict['time'])

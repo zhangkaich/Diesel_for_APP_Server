@@ -6,6 +6,9 @@ import commands.publish_notice as publish_notice
 import commands.get_notices as get_notices
 import commands.publish_proposal as publish_proposal
 import commands.get_proposal_list as get_proposal_list
+import commands.add_comment as add_comment
+import commands.del_comment as del_comment
+import commands.get_comments as get_comments
 
 class Command(object):
     def __init__(self, command_list):
@@ -40,6 +43,15 @@ class Command(object):
                 elif cmp(command_dict['command'], 'get_proposal_list') == 0:
                     print 'get_proposal_list'
                     reply = get_proposal_list.process(command_dict)
+                elif cmp(command_dict['command'], 'add_comment') == 0:
+                    print 'add_comment'
+                    reply = add_comment.process(command_dict)
+                elif cmp(command_dict['command'], 'del_comment') == 0:
+                    print 'del_comment'
+                    reply = del_comment.process(command_dict)
+                elif cmp(command_dict['command'], 'get_comments') == 0:
+                    print 'get_comments'
+                    reply = get_comments.process(command_dict)
                 else:
                     print command_dict['command']
 
