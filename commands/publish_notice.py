@@ -16,5 +16,6 @@ def process(command):
         return reply(False, command)
 
 def reply(result, command):
-    return {'command': command['command'], 'command_index': command['command_index'], \
+    result = {'command': command['command'], 'sequence_id': command['sequence_id'], \
             "result": result,}
+    return result

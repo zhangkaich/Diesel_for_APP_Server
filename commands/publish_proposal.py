@@ -35,8 +35,11 @@ def process(command):
     #             time:
     #SORT list get proposal_*->time
     #sort list by proposal*->time get proposal*->content
-    return reply(True, command)
+    return reply(True, command, proposal_id)
 
-def reply(result, command):
-    return{'command': command['command'], 'command_index': command['command_index'], \
-            "result":result}
+def reply(result, command, proposal_id):
+
+    result = {'command': command['command'], 'sequence_id': command['sequence_id'], \
+            "result":result, "id":proposal_id}
+
+    return result

@@ -11,6 +11,13 @@ def process(command):
 
     client = RedisClient(host='localhost', port=6391)
     client.select(2)
+    #check propsoal 
+    key = "proposal" + str(proposal_id)
+    print "key %r" % key
+    result = client.exists(key)
+    if not result:
+       return {'command': command['command'], 'sequence_id': command['sequence_id'], "result": result}
+
     #sadd
     comment_id = "comment_" + str(proposal_id)
     client.lpush(comment_id, user_name+'^'+comment+'^'+str(time.time()))
@@ -24,5 +31,6 @@ def process(command):
     return reply(True, command, comments)
 
 def reply(result, command, comments):
-    return{'command': command['command'], 'command_index': command['command_index'], \
+    result = {'command': command['command'], 'sequence_id': command['sequence_id'], \
             "result":result, "comments":comments}
+    return result

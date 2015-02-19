@@ -16,8 +16,12 @@ def process(command):
     return reply(False, 0, 0, command)
 
 def reply(result, user_id, privilege, command):
-    return{'command': command['command'], 'command_index': command['command_index'], \
+    result = {'command': command['command'], 'sequence_id': command['sequence_id'], \
             "result":result, "user_id":user_id, "privilege":privilege}
+    result["proposal_list"]=[{'id': 234, 'title': 'test0'}, {'id': 235, 'title': 'test1'} ]
+    print "login"
+    print [result]
+    return result
 
 def test_proces():
 	#TODO
