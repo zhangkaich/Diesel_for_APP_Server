@@ -1,10 +1,11 @@
 # coding: utf8
 from diesel.protocols.redis import RedisClient
+import data_table
 
 def process(command):
     notice = command["content"]
     client = RedisClient(host='localhost', port=6391)
-    client.select(3)
+    client.select(data_table.NOTICE_TABLE)
     #Write notice to redis
     #Set
     print notice.encode('UTF8')

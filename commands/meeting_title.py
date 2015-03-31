@@ -1,6 +1,6 @@
 # coding: utf8
 
-class ReconsiderTitle(object):
+class MeetingTitle(object):
 
     def __init__(self, title, state, id, content, agree_count, disagree_count):
         self.data_dict = {}

@@ -3,11 +3,12 @@ import ujson as json
 import time
 from diesel.protocols.redis import RedisClient, RedisTransactionError, RedisLock, LockNotAcquired
 from proposal_title import ProposalTitle
+import data_table
 
 def process(command):
     proposal_id = command['proposal_id']
     client = RedisClient(host='localhost', port=6391)
-    client.select(2)
+    client.select(data_table.PROPOSAL_TABLE)
     #get proposal
     #get proposal comment
 

@@ -1,5 +1,6 @@
 # coding: utf8
 from diesel.protocols.redis import RedisClient
+import data_table
 
 def process(command):
     user_name = command["user_name"]
@@ -7,10 +8,11 @@ def process(command):
     print user_name
     print password
     client = RedisClient(host='localhost', port=6391)
-    client.select(1)
+    client.select(data_table.USER_TABLE)
     pw = client.hget('user_name', user_name)
     if pw == password:
-	    return reply(True, 10001, 1, command)
+        user_id = client.hget('user_id', user_name)
+        return reply(True, int(user_id), 1, command)
     else:
         print "password is not right : %r" % user_name
     return reply(False, 0, 0, command)

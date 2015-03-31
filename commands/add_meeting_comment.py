@@ -6,21 +6,21 @@ from comment import Comment
 import data_table
 
 def process(command):
-    proposal_id = command['proposal_id']
+    meeting_id = command['meeting_id']
     comment = command['comment']
     user_name = command['user_name']
 
     client = RedisClient(host='localhost', port=6391)
-    client.select(data_table.PROPOSAL_TABLE)
+    client.select(data_table.MEETING_TABLE)
     #check propsoal 
-    key = "proposal" + str(proposal_id)
+    key = "meeting" + str(meeting_id)
     print "key %r" % key
     result = client.exists(key)
     if not result:
        return {'command': command['command'], 'sequence_id': command['sequence_id'], "result": result}
 
     #sadd
-    comment_id = "comment_" + str(proposal_id)
+    comment_id = "comment_" + str(meeting_id)
     client.lpush(comment_id, user_name+'^'+comment+'^'+str(time.time()))
 
     comments = []

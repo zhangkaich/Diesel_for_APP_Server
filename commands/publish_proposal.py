@@ -1,12 +1,13 @@
 # coding: utf8
 import time
 from diesel.protocols.redis import RedisClient, RedisTransactionError, RedisLock, LockNotAcquired
+import data_table
 
 lock_timeout = 3
 
 def process(command):
     client = RedisClient(host='localhost', port=6391)
-    client.select(2)
+    client.select(data_table.PROPOSAL_TABLE)
     proposal_id_lock = "proposal_id_lock"
     proposal_id_key = "uuid"
     proposal_id = 0
@@ -18,8 +19,14 @@ def process(command):
     except LockNotAcquired:
         return reply(False, command)
     proposeal_key = "proposal" + str(proposal_id)
-    client.hset(proposeal_key, 'title', command['title'])
-    client.hset(proposeal_key, 'content', command['content'])
+    if command['title'] is None or len(command['title']) == 0:
+       client.hset(proposeal_key, 'title', " ")
+    else:
+       client.hset(proposeal_key, 'title', command['title'])
+    if command['content'] is None or len(command['content']) == 0:
+       client.hset(proposeal_key, 'content', " ")
+    else:
+       client.hset(proposeal_key, 'content', command['content'])
     #提议: 复议/未复议
     #复议: 赞同/反对
     #会议: 进行中/已完成/为开始
@@ -40,6 +47,6 @@ def process(command):
 def reply(result, command, proposal_id):
 
     result = {'command': command['command'], 'sequence_id': command['sequence_id'], \
-            "result":result, "id":proposal_id}
+            "result":result, "id":int(proposal_id)}
 
     return result
